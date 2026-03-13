@@ -509,7 +509,10 @@ function SessionContent({
   };
 
   const handleRenameSubmit = async () => {
-    if (!sessionState) return;
+    if (!sessionState) {
+      setIsRenaming(false);
+      return;
+    }
 
     const trimmed = title.trim();
 
@@ -693,7 +696,7 @@ function SessionContent({
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      handleRenameSubmit();
+                      e.currentTarget.blur();
                     }
                     if (e.key === "Escape") {
                       setIsRenaming(false);
@@ -707,7 +710,7 @@ function SessionContent({
                   onClick={handleStartRename}
                   title="Click to rename"
                 >
-                  {sessionDisplayInfo.title}
+                  {resolvedTitle}
                 </h1>
               )}
               <p className="text-sm text-muted-foreground">{sessionDisplayInfo.repoLabel}</p>
@@ -805,8 +808,9 @@ function SessionContent({
           className={`fixed inset-0 z-50 lg:hidden ${isDetailsOpen ? "" : "pointer-events-none"}`}
         >
           <div
-            className={`absolute inset-0 bg-black/50 transition-opacity duration-200 ${isDetailsOpen ? "opacity-100" : "opacity-0"
-              }`}
+            className={`absolute inset-0 bg-black/50 transition-opacity duration-200 ${
+              isDetailsOpen ? "opacity-100" : "opacity-0"
+            }`}
             onClick={closeDetails}
           />
 

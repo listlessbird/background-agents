@@ -388,7 +388,7 @@ function SessionListItem({
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                handleRenameSubmit();
+                e.currentTarget.blur();
               }
               if (e.key === "Escape") {
                 e.preventDefault();
